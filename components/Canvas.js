@@ -64,9 +64,9 @@ const Canvas = (props) => {
     //Our draw came here
     const render = () => {
       frameCount++;
+      if (frameCount >= 20) frameCount = 20;
       context.clearRect(0, 0, canvas.width, canvas.height);
       draw(context, frameCount);
-      if (frameCount == 20) return;
       animationFrameId = window.requestAnimationFrame(render);
     };
     render();
