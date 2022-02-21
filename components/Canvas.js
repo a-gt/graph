@@ -33,6 +33,16 @@ const Canvas = (props) => {
     ctx.beginPath();
     ctx.arc(canvas.width / 2 - 10, canvas.height / 2 - 10, r, 0, 2 * Math.PI);
     ctx.fill();
+    ctx.fillStyle = "rgb(39, 35, 37)";
+    ctx.beginPath();
+    ctx.arc(
+      canvas.width / 2 - 10 + Math.max(r - 10, 0) / 100,
+      canvas.height / 2 - 10 + Math.max(r - 10, 0) / 100,
+      Math.max(r - 10, 0),
+      0,
+      2 * Math.PI
+    );
+    ctx.fill();
   };
 
   useEffect(() => {
@@ -56,6 +66,7 @@ const Canvas = (props) => {
       frameCount++;
       context.clearRect(0, 0, canvas.width, canvas.height);
       draw(context, frameCount);
+      if (frameCount == 20) return;
       animationFrameId = window.requestAnimationFrame(render);
     };
     render();
