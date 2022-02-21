@@ -13,9 +13,41 @@ const getPixelRatio = (context) => {
   return (window.devicePixelRatio || 1) / backingStore;
 };
 
-const Canvas = (props) => {
+function resizeCanvasToDisplaySize(context, canvas) {
+  let ratio = getPixelRatio(context);
+  let width = getComputedStyle(canvas).getPropertyValue("width").slice(0, -2);
+  let height = getComputedStyle(canvas).getPropertyValue("height").slice(0, -2);
+
+  canvas.width = width * ratio;
+  canvas.height = height * ratio;
+  canvas.style.width = `${width}px`;
+  canvas.style.height = `${height}px`;
+}
+
+const useCanvas = (draw, options = {}) => {
   const canvasRef = useRef(null);
 
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    const context = canvas.getContext(options.context || "2d");
+    let frameCount = 0;
+    let animationFrameId;
+    resizeCanvasToDisplaySize(context, canvas);
+    const render = () => {
+      frameCount++;
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      draw(context, frameCount);
+      animationFrameId = window.requestAnimationFrame(render);
+    };
+    render();
+    return () => {
+      window.cancelAnimationFrame(animationFrameId);
+    };
+  }, [draw]);
+  return canvasRef;
+};
+
+const Canvas = (props) => {
   const draw = (ctx, frameCount) => {
     let canvas = ctx.canvas;
     let r = (canvas.width / 2 - 10) * Math.sin(frameCount * 0.05) ** 2;
@@ -45,36 +77,7 @@ const Canvas = (props) => {
     ctx.fill();
   };
 
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    const context = canvas.getContext("2d");
-    let frameCount = 0;
-    let animationFrameId;
-    let ratio = getPixelRatio(context);
-    let width = getComputedStyle(canvas).getPropertyValue("width").slice(0, -2);
-    let height = getComputedStyle(canvas)
-      .getPropertyValue("height")
-      .slice(0, -2);
-
-    canvas.width = width * ratio;
-    canvas.height = height * ratio;
-    canvas.style.width = `${width}px`;
-    canvas.style.height = `${height}px`;
-
-    //Our draw came here
-    const render = () => {
-      frameCount++;
-      if (frameCount >= 20) frameCount = 20;
-      context.clearRect(0, 0, canvas.width, canvas.height);
-      draw(context, frameCount);
-      animationFrameId = window.requestAnimationFrame(render);
-    };
-    render();
-
-    return () => {
-      window.cancelAnimationFrame(animationFrameId);
-    };
-  }, [draw]);
+  const canvasRef = useCanvas(draw);
 
   return <canvas ref={canvasRef} width={100} height={100} {...props} />;
 };
