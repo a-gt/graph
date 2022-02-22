@@ -60,16 +60,17 @@ const Canvas = (props) => {
     ctx.setLineDash([]);
     ctx.strokeStyle = "rgb(255, 246, 230)";
     let r = radius.radius;
-    drawCircle(ctx, canvas.width - size * 2, canvas.height - size * 2, r);
+    //drawCircle(ctx, canvas.width - size * 2, canvas.height - size * 2, r);
     /*if (hover) {
       ctx.fillStyle = "rgb(255, 246, 230)";
-    ctx.font = "48px serif";
+    
       ctx.fillText(`(${coord[0]},${coord[1]})`, 10, 500 * ratio);
       ctx.beginPath();
       ctx.arc(coord[0], coord[1], 10, 0, 2 * Math.PI);
       ctx.fill();
     }
     */
+    ctx.strokeStyle = "#99ccff";
     roundLine(
       ctx,
       width.width / 2,
@@ -78,6 +79,28 @@ const Canvas = (props) => {
       width.width / 2,
       width.width
     );
+    ctx.font = "26px monospace";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "hanging";
+    const str = "Line 1";
+    const w = ctx.measureText(str).width;
+    let mouseX = 100;
+    let mouseY = 100;
+    ctx.beginPath();
+    ctx.fillStyle = "rgba(0,0,0,0.2)";
+    ctx.fillRect(mouseX - (w + 30) / 2 + 10, mouseY - 45 + 10, w + 70, 50);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.fillStyle = "#f1f1f5";
+    ctx.fillRect(mouseX - (w + 30) / 2, mouseY - 45, w + 70, 50);
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillStyle = "#0000a1";
+    ctx.fillText(str, mouseX + 30, mouseY - 30);
+    ctx.fillStyle = "#99ccff";
+    ctx.beginPath();
+    ctx.fillRect(mouseX - (w + 30) / 2 + 15, mouseY - 30, 20, 20);
+    ctx.fill();
   };
 
   const canvasRef = useCanvas(draw);
@@ -94,7 +117,7 @@ const Canvas = (props) => {
       height={500}
       onMouseEnter={() => {
         startAnimation("normal", 200);
-        startWidth("grow", 200);
+        startWidth("grow", 150);
         setHover(true);
         const canvas = canvasRef.current;
         const ctx = canvas.getContext("2d");
@@ -103,7 +126,7 @@ const Canvas = (props) => {
       }}
       onMouseLeave={() => {
         startAnimation("start", 200);
-        startWidth("normal", 200);
+        startWidth("normal", 150);
         setHover(false);
         const canvas = canvasRef.current;
         const ctx = canvas.getContext("2d");
