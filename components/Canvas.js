@@ -46,6 +46,8 @@ const Canvas = (props) => {
     }
   );
   const [coord, setCoord] = useState([0, 0]);
+  const [hover, setHover] = useState(false);
+
   const draw = (ctx, ratio) => {
     update();
     let canvas = ctx.canvas;
@@ -59,15 +61,21 @@ const Canvas = (props) => {
     ctx.strokeStyle = "rgb(255, 246, 230)";
     let r = radius.radius;
     drawCircle(ctx, canvas.width - size * 2, canvas.height - size * 2, r);
-    ctx.fillStyle = "rgb(255, 246, 230)";
+    /*if (hover) {
+      ctx.fillStyle = "rgb(255, 246, 230)";
     ctx.font = "48px serif";
-    // ctx.fillText(`(${coord[0]},${coord[1]})`, 10, 500 * ratio);
+      ctx.fillText(`(${coord[0]},${coord[1]})`, 10, 500 * ratio);
+      ctx.beginPath();
+      ctx.arc(coord[0], coord[1], 10, 0, 2 * Math.PI);
+      ctx.fill();
+    }
+    */
     roundLine(
       ctx,
-      width.width/2,
-      canvas.height - width.width/2,
-      canvas.width - width.width/2,
-      width.width/2,
+      width.width / 2,
+      canvas.height - width.width / 2,
+      canvas.width - width.width / 2,
+      width.width / 2,
       width.width
     );
   };
@@ -75,7 +83,7 @@ const Canvas = (props) => {
   const canvasRef = useCanvas(draw);
 
   useEffect(() => {
-    startAnimation("normal", 500);
+    //startAnimation("normal", 500);
     startWidth("normal", 500);
   }, []);
 
@@ -85,12 +93,22 @@ const Canvas = (props) => {
       width={500}
       height={500}
       onMouseEnter={() => {
-        startAnimation("grow", 200);
+        startAnimation("normal", 200);
         startWidth("grow", 200);
+        setHover(true);
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext("2d");
+        let ratio = getPixelRatio(ctx);
+        draw(ctx, ratio);
       }}
       onMouseLeave={() => {
-        startAnimation("normal", 200);
+        startAnimation("start", 200);
         startWidth("normal", 200);
+        setHover(false);
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext("2d");
+        let ratio = getPixelRatio(ctx);
+        draw(ctx, ratio);
       }}
       onMouseMove={(event) => {
         const canvas = canvasRef.current;
@@ -100,6 +118,7 @@ const Canvas = (props) => {
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
         setCoord([x * ratio, y * ratio]);
+        draw(ctx, ratio);
       }}
       {...props}
     />

@@ -1,9 +1,11 @@
 import Head from "next/head";
 import Image from "next/image";
+import { useState } from "react";
 import Button from "../components/Button";
 import Canvas from "../components/Canvas";
 
 export default function Home() {
+  const [tab, setTab] = useState(0);
   return (
     <div>
       <Head>
@@ -15,11 +17,15 @@ export default function Home() {
         <h1 className="text-4xl bold">Graphing Calculator</h1>
         <div className="h-[1px] w-100 bg-silver"></div>
         <div className="flex flex-row h-[500px]">
-          <div className="w-full">
-            <Canvas />
-          </div>
+          <div className="w-full">{tab == 0 && <Canvas />}</div>
           <div className="bg-striped h-100 w-12 flex flex-col">
-            <div className="bg-dark w-10 h-10 mt-2 flex items-center justify-center rounded-r-md cursor-pointer">
+            <div
+              className={
+                (tab == 0 ? "bg-dark" : "") +
+                " w-10 h-10 mt-2 flex items-center justify-center rounded-r-md cursor-pointer transition"
+              }
+              onClick={() => setTab(0)}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width={24}
@@ -37,7 +43,13 @@ export default function Home() {
                 <line x1={6} y1={20} x2={6} y2={14} />
               </svg>
             </div>
-            <div className="w-10 h-10 mt-2 flex items-center justify-center rounded-r-md cursor-pointer">
+            <div
+              className={
+                (tab == 1 ? "bg-dark" : "") +
+                " w-10 h-10 mt-2 flex items-center justify-center rounded-r-md cursor-pointer transition"
+              }
+              onClick={() => setTab(1)}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width={24}
@@ -55,7 +67,13 @@ export default function Home() {
                 <line x1={12} y1={4} x2={12} y2={20} />
               </svg>
             </div>
-            <div className="w-10 h-10 mt-2 flex items-center justify-center rounded-r-md cursor-pointer">
+            <div
+              className={
+                (tab == 2 ? "bg-dark" : "") +
+                " w-10 h-10 mt-2 flex items-center justify-center rounded-r-md cursor-pointer transition"
+              }
+              onClick={() => setTab(2)}
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width={24}
