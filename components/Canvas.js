@@ -45,7 +45,12 @@ const Canvas = (props) => {
       grow: { width: 12 },
     }
   );
-  const [coord, setCoord] = useState([0, 0]);
+  const [opacityState, startOpacity] = useTween(
+    { opacity: 0 },
+    {
+      normal: { opacity: 1 },
+    }
+  );
   const [hover, setHover] = useState(false);
 
   const draw = (ctx, ratio) => {
@@ -61,15 +66,6 @@ const Canvas = (props) => {
     ctx.strokeStyle = "rgb(255, 246, 230)";
     let r = radius.radius;
     //drawCircle(ctx, canvas.width - size * 2, canvas.height - size * 2, r);
-    /*if (hover) {
-      ctx.fillStyle = "rgb(255, 246, 230)";
-    
-      ctx.fillText(`(${coord[0]},${coord[1]})`, 10, 500 * ratio);
-      ctx.beginPath();
-      ctx.arc(coord[0], coord[1], 10, 0, 2 * Math.PI);
-      ctx.fill();
-    }
-    */
     ctx.strokeStyle = "#99ccff";
     roundLine(
       ctx,
@@ -84,23 +80,27 @@ const Canvas = (props) => {
     ctx.textBaseline = "hanging";
     const str = "Line 1";
     const w = ctx.measureText(str).width;
-    let mouseX = 100;
-    let mouseY = 100;
+    let mouseX = canvas.mouseX - 20;
+    let mouseY = canvas.mouseY - 30;
     ctx.beginPath();
-    ctx.fillStyle = "rgba(0,0,0,0.2)";
-    ctx.fillRect(mouseX - (w + 30) / 2 + 10, mouseY - 45 + 10, w + 70, 50);
+    let opacity = opacityState.opacity;
+    ctx.fillStyle = `rgba(0,0,0,${opacity / 5})`;
+    ctx.lineWidth = 1;
+    ctx.fillRect(mouseX - (w + 30) / 2 + 12, mouseY - 33, w + 70, 50);
     ctx.fill();
     ctx.beginPath();
-    ctx.fillStyle = "#f1f1f5";
-    ctx.fillRect(mouseX - (w + 30) / 2, mouseY - 45, w + 70, 50);
+    ctx.fillStyle = `rgba(241,241,245,${opacity})`;
+    ctx.strokeStyle = `rgba(0,0,161,${opacity / 2})`;
+    ctx.rect(mouseX - (w + 30) / 2, mouseY - 45, w + 70, 50);
     ctx.fill();
     ctx.stroke();
-    ctx.fillStyle = "#0000a1";
-    ctx.fillText(str, mouseX + 30, mouseY - 30);
-    ctx.fillStyle = "#99ccff";
+    ctx.fillStyle = `rgba(0,0,161,${opacity})`;
+    ctx.fillText(str, mouseX + 35, mouseY - 30);
+    ctx.fillStyle = `rgba(153,204,255,${opacity})`;
     ctx.beginPath();
-    ctx.fillRect(mouseX - (w + 30) / 2 + 15, mouseY - 30, 20, 20);
+    ctx.rect(mouseX - (w + 30) / 2 + 15, mouseY - 30, 20, 20);
     ctx.fill();
+    ctx.stroke();
   };
 
   const canvasRef = useCanvas(draw);
@@ -118,20 +118,14 @@ const Canvas = (props) => {
       onMouseEnter={() => {
         startAnimation("normal", 200);
         startWidth("grow", 150);
+        startOpacity("normal", 150);
         setHover(true);
-        const canvas = canvasRef.current;
-        const ctx = canvas.getContext("2d");
-        let ratio = getPixelRatio(ctx);
-        draw(ctx, ratio);
       }}
       onMouseLeave={() => {
         startAnimation("start", 200);
         startWidth("normal", 150);
+        startOpacity("start", 150);
         setHover(false);
-        const canvas = canvasRef.current;
-        const ctx = canvas.getContext("2d");
-        let ratio = getPixelRatio(ctx);
-        draw(ctx, ratio);
       }}
       onMouseMove={(event) => {
         const canvas = canvasRef.current;
@@ -140,7 +134,8 @@ const Canvas = (props) => {
         const rect = canvas.getBoundingClientRect();
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
-        setCoord([x * ratio, y * ratio]);
+        canvasRef.current.mouseX = x * ratio;
+        canvasRef.current.mouseY = y * ratio;
         draw(ctx, ratio);
       }}
       {...props}
