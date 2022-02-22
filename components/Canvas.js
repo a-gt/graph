@@ -29,6 +29,34 @@ const roundLine = (ctx, x1, y1, x2, y2, thickness = 2) => {
   ctx.stroke();
 };
 
+const drawTooltip = (ctx, mouseX, mouseY, opacity) => {
+  mouseX -= 20;
+  mouseY -= 30;
+  ctx.font = "26px monospace";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "hanging";
+  const str = "Line 1";
+  const w = ctx.measureText(str).width;
+  ctx.beginPath();
+  ctx.fillStyle = `rgba(0,0,0,${opacity / 5})`;
+  ctx.lineWidth = 1;
+  ctx.fillRect(mouseX - (w + 30) / 2 + 12, mouseY - 33, w + 70, 50);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.fillStyle = `rgba(241,241,245,${opacity})`;
+  ctx.strokeStyle = `rgba(0,0,161,${opacity / 2})`;
+  ctx.rect(mouseX - (w + 30) / 2, mouseY - 45, w + 70, 50);
+  ctx.fill();
+  ctx.stroke();
+  ctx.fillStyle = `rgba(0,0,161,${opacity})`;
+  ctx.fillText(str, mouseX + 35, mouseY - 30);
+  ctx.fillStyle = `rgba(153,204,255,${opacity})`;
+  ctx.beginPath();
+  ctx.rect(mouseX - (w + 30) / 2 + 15, mouseY - 30, 20, 20);
+  ctx.fill();
+  ctx.stroke();
+};
+
 const Canvas = (props) => {
   let size = 40; //40;
   const [radius, startAnimation] = useTween(
@@ -45,7 +73,7 @@ const Canvas = (props) => {
       grow: { width: 12 },
     }
   );
-  const [opacityState, startOpacity] = useTween(
+  const [opacity, startOpacity] = useTween(
     { opacity: 0 },
     {
       normal: { opacity: 1 },
@@ -65,7 +93,7 @@ const Canvas = (props) => {
     ctx.setLineDash([]);
     ctx.strokeStyle = "rgb(255, 246, 230)";
     let r = radius.radius;
-    //drawCircle(ctx, canvas.width - size * 2, canvas.height - size * 2, r);
+    drawCircle(ctx, canvas.width - size * 2, canvas.height - size * 2, r);
     ctx.strokeStyle = "#99ccff";
     roundLine(
       ctx,
@@ -75,32 +103,9 @@ const Canvas = (props) => {
       width.width / 2,
       width.width
     );
-    ctx.font = "26px monospace";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "hanging";
-    const str = "Line 1";
-    const w = ctx.measureText(str).width;
-    let mouseX = canvas.mouseX - 20;
-    let mouseY = canvas.mouseY - 30;
-    ctx.beginPath();
-    let opacity = opacityState.opacity;
-    ctx.fillStyle = `rgba(0,0,0,${opacity / 5})`;
-    ctx.lineWidth = 1;
-    ctx.fillRect(mouseX - (w + 30) / 2 + 12, mouseY - 33, w + 70, 50);
-    ctx.fill();
-    ctx.beginPath();
-    ctx.fillStyle = `rgba(241,241,245,${opacity})`;
-    ctx.strokeStyle = `rgba(0,0,161,${opacity / 2})`;
-    ctx.rect(mouseX - (w + 30) / 2, mouseY - 45, w + 70, 50);
-    ctx.fill();
-    ctx.stroke();
-    ctx.fillStyle = `rgba(0,0,161,${opacity})`;
-    ctx.fillText(str, mouseX + 35, mouseY - 30);
-    ctx.fillStyle = `rgba(153,204,255,${opacity})`;
-    ctx.beginPath();
-    ctx.rect(mouseX - (w + 30) / 2 + 15, mouseY - 30, 20, 20);
-    ctx.fill();
-    ctx.stroke();
+    let mouseX = canvas.mouseX;
+    let mouseY = canvas.mouseY;
+    drawTooltip(ctx, mouseX, mouseY, opacity.opacity);
   };
 
   const canvasRef = useCanvas(draw);
