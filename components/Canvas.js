@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState } from "react";
-import useCanvas from "../lib/useCanvas";
+import useCanvas, { getPixelRatio } from "../lib/useCanvas";
 import useTween, { update } from "../lib/useTween";
 
 const drawCircle = (ctx, x, y, r, color = "rgb(255, 246, 230)") => {
@@ -38,7 +38,15 @@ const Canvas = (props) => {
       grow: { radius: size + 10 },
     }
   );
-  const draw = (ctx) => {
+  const [width, startWidth] = useTween(
+    { width: 0 },
+    {
+      normal: { width: 5 },
+      grow: { width: 12 },
+    }
+  );
+  const [coord, setCoord] = useState([0, 0]);
+  const draw = (ctx, ratio) => {
     update();
     let canvas = ctx.canvas;
     let x = canvas.width / 2;
@@ -51,12 +59,24 @@ const Canvas = (props) => {
     ctx.strokeStyle = "rgb(255, 246, 230)";
     let r = radius.radius;
     drawCircle(ctx, canvas.width - size * 2, canvas.height - size * 2, r);
+    ctx.fillStyle = "rgb(255, 246, 230)";
+    ctx.font = "48px serif";
+    // ctx.fillText(`(${coord[0]},${coord[1]})`, 10, 500 * ratio);
+    roundLine(
+      ctx,
+      width.width,
+      canvas.height - width.width,
+      canvas.width - width.width,
+      width.width,
+      width.width
+    );
   };
 
   const canvasRef = useCanvas(draw);
 
   useEffect(() => {
     startAnimation("normal", 500);
+    startWidth("normal", 500);
   }, []);
 
   return (
@@ -65,10 +85,21 @@ const Canvas = (props) => {
       width={500}
       height={500}
       onMouseEnter={() => {
-        startAnimation("grow", 100);
+        startAnimation("grow", 200);
+        startWidth("grow", 200);
       }}
       onMouseLeave={() => {
-        startAnimation("normal", 100);
+        startAnimation("normal", 200);
+        startWidth("normal", 200);
+      }}
+      onMouseMove={(event) => {
+        const canvas = canvasRef.current;
+        const ctx = canvas.getContext("2d");
+        let ratio = getPixelRatio(ctx);
+        const rect = canvas.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        setCoord([x * ratio, y * ratio]);
       }}
       {...props}
     />
