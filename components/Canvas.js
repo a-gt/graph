@@ -64,10 +64,10 @@ const Canvas = (props) => {
     // ctx.fillText(`(${coord[0]},${coord[1]})`, 10, 500 * ratio);
     roundLine(
       ctx,
-      width.width,
-      canvas.height - width.width,
-      canvas.width - width.width,
-      width.width,
+      width.width/2,
+      canvas.height - width.width/2,
+      canvas.width - width.width/2,
+      width.width/2,
       width.width
     );
   };
