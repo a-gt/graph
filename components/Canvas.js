@@ -25,17 +25,20 @@ const roundLine = (ctx, x1, y1, x2, y2, thickness = 2) => {
   ctx.beginPath();
   ctx.moveTo(x1, y1);
   ctx.lineTo(x2, y2);
+  if (ctx.isPointInPath(ctx.canvas.mouseX, ctx.canvas.mouseY)) {
+    ctx.strokeStyle = "#000";
+  }
   ctx.lineWidth = thickness;
   ctx.stroke();
 };
 
 const drawTooltip = (ctx, mouseX, mouseY, opacity) => {
+  const str = `(${mouseX},${mouseY})`;
   mouseX -= 20;
   mouseY -= 30;
   ctx.font = "26px monospace";
   ctx.textAlign = "center";
   ctx.textBaseline = "hanging";
-  const str = "Line 1";
   const w = ctx.measureText(str).width;
   ctx.beginPath();
   ctx.fillStyle = `rgba(0,0,0,${opacity / 5})`;
@@ -55,6 +58,45 @@ const drawTooltip = (ctx, mouseX, mouseY, opacity) => {
   ctx.rect(mouseX - (w + 30) / 2 + 15, mouseY - 30, 20, 20);
   ctx.fill();
   ctx.stroke();
+};
+
+const roundRect = (ctx, x, y, width, height, radius, fill, stroke) => {
+  if (typeof stroke === "undefined") {
+    stroke = true;
+  }
+  if (typeof radius === "undefined") {
+    radius = 5;
+  }
+  if (typeof radius === "number") {
+    radius = { tl: radius, tr: radius, br: radius, bl: radius };
+  } else {
+    var defaultRadius = { tl: 0, tr: 0, br: 0, bl: 0 };
+    for (var side in defaultRadius) {
+      radius[side] = radius[side] || defaultRadius[side];
+    }
+  }
+  ctx.beginPath();
+  ctx.moveTo(x + radius.tl, y);
+  ctx.lineTo(x + width - radius.tr, y);
+  ctx.quadraticCurveTo(x + width, y, x + width, y + radius.tr);
+  ctx.lineTo(x + width, y + height - radius.br);
+  ctx.quadraticCurveTo(
+    x + width,
+    y + height,
+    x + width - radius.br,
+    y + height
+  );
+  ctx.lineTo(x + radius.bl, y + height);
+  ctx.quadraticCurveTo(x, y + height, x, y + height - radius.bl);
+  ctx.lineTo(x, y + radius.tl);
+  ctx.quadraticCurveTo(x, y, x + radius.tl, y);
+  ctx.closePath();
+  if (fill) {
+    ctx.fill();
+  }
+  if (stroke) {
+    ctx.stroke();
+  }
 };
 
 const Canvas = (props) => {
@@ -81,7 +123,7 @@ const Canvas = (props) => {
   );
   const [hover, setHover] = useState(false);
 
-  const draw = (ctx, ratio) => {
+  const draw = (ctx) => {
     update();
     let canvas = ctx.canvas;
     let x = canvas.width / 2;
@@ -93,7 +135,7 @@ const Canvas = (props) => {
     ctx.setLineDash([]);
     ctx.strokeStyle = "rgb(255, 246, 230)";
     let r = radius.radius;
-    drawCircle(ctx, canvas.width - size * 2, canvas.height - size * 2, r);
+    //drawCircle(ctx, canvas.width - size * 2, canvas.height - size * 2, r);
     ctx.strokeStyle = "#99ccff";
     roundLine(
       ctx,
@@ -106,6 +148,10 @@ const Canvas = (props) => {
     let mouseX = canvas.mouseX;
     let mouseY = canvas.mouseY;
     drawTooltip(ctx, mouseX, mouseY, opacity.opacity);
+    /*ctx.fillStyle = "#000";
+    if (mouseX >= 10 && mouseX <= 110 && mouseY >= 10 && mouseY <= 110)
+      ctx.fillStyle = "#fff";
+    roundRect(ctx, 10, 10, 100, 100, 10, true, false);*/
   };
 
   const canvasRef = useCanvas(draw);
@@ -141,6 +187,7 @@ const Canvas = (props) => {
         const y = event.clientY - rect.top;
         canvasRef.current.mouseX = x * ratio;
         canvasRef.current.mouseY = y * ratio;
+        setHover(true);
         draw(ctx, ratio);
       }}
       {...props}
