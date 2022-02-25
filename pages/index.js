@@ -17,7 +17,10 @@ export default function Home() {
         <h1 className="text-4xl bold">Graphing Calculator</h1>
         <div className="h-[1px] w-100 bg-silver"></div>
         <div className="flex flex-row h-[500px]">
-          <div className="w-full">{tab == 0 && <Canvas />}</div>
+          <div className="w-full">
+            {tab == 0 && <Canvas />}
+            {tab == 2 && <p className="pr-8"><br />This is a graphing calculator built in JavaScript using React and the canvas. This graphing calculator can graph any polynomial, logarithmic, trigonometric, or exponential function. It uses the library expr-eval for mathematical evaluation and the library tween.js for animations.</p>}
+          </div>
           <div className="bg-striped h-100 w-12 flex flex-col">
             <div
               className={
@@ -62,9 +65,10 @@ export default function Home() {
                 strokeLinejoin="round"
                 className=""
               >
-                <polyline points="4 7 4 4 20 4 20 7" />
-                <line x1={9} y1={20} x2={15} y2={20} />
-                <line x1={12} y1={4} x2={12} y2={20} />
+                <rect x={3} y={3} width={7} height={7} />
+                <rect x={14} y={3} width={7} height={7} />
+                <rect x={14} y={14} width={7} height={7} />
+                <rect x={3} y={14} width={7} height={7} />
               </svg>
             </div>
             <div
@@ -86,10 +90,9 @@ export default function Home() {
                 strokeLinejoin="round"
                 className=""
               >
-                <rect x={3} y={3} width={7} height={7} />
-                <rect x={14} y={3} width={7} height={7} />
-                <rect x={14} y={14} width={7} height={7} />
-                <rect x={3} y={14} width={7} height={7} />
+                <polyline points="4 7 4 4 20 4 20 7" />
+                <line x1={9} y1={20} x2={15} y2={20} />
+                <line x1={12} y1={4} x2={12} y2={20} />
               </svg>
             </div>
           </div>
