@@ -54,3 +54,34 @@ h6 {
 math-field:focus-within {
   outline: none;
 }
+
+.ML__keyboard {
+  --hue: 206 !important;
+  --keyboard-background: rgb(0, 0, 0) !important;
+  --keyboard-text: #f0f0f0 !important;
+  --keyboard-text-active: hsl(var(--hue, 212), 100%, 60%) !important;
+  --keyboard-background-border: #333 !important;
+  --keycap-background: rgb(40, 40, 50) !important;
+  --keycap-background-active: rgb(60, 60, 70) !important;
+  --keycap-background-border: rgb(50, 50, 60) !important;
+  --keycap-background-border-bottom: rgb(50, 50, 70) !important;
+  --keycap-text: #d0d0d0 !important;
+  --keycap-text-active: #000 !important;
+  --keycap-secondary-text: #fff !important;
+  --keycap-modifier-background: rgb(60, 60, 70) !important;
+  --keycap-modifier-border: rgb(70, 70, 80) !important;
+  --keycap-modifier-border-bottom: rgb(70, 70, 90) !important;
+  --keyboard-alternate-background: hsl(var(--hue, 212), 19%, 38%) !important;
+}
+
+.ML__keyboard .ML__mathlive {
+  cursor: pointer;
+}
+
+.ML__keyboard .ML__mathlive .ML__base {
+  cursor: pointer;
+}
+
+.ML__keyboard .keycap {
+  transition: all 0.05s ease-in-out;
+}
