@@ -7,12 +7,10 @@ const Input = ({ val, onChange, ...props }) => {
     <input
       type="text"
       value={input}
-      className="p-1"
+      className="p-1 rounded"
       onChange={(e) => {
         if (onChange) onChange(e.target.value);
         setInput(e.target.value);
-        console.log(input)
-        
       }}
       {...props}
     />
