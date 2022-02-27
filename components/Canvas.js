@@ -11,27 +11,8 @@ import {
   onWheel,
 } from "../lib/graph/events";
 
-const Canvas = (props) => {
-  const [functions, setFunctions] = useState({
-    1: {
-      expression: "x",
-      color: "#99ccff",
-    },
-    2: {
-      expression: "-x",
-      color: "#ff7799",
-    },
-    3: {
-      expression: "2x",
-      color: "#77ff99",
-    },
-    4: {
-      expression: "-2x",
-      color: "#ffffaa",
-    },
-  });
-
-  const draw = (ctx, { drawLine, drawTooltip }) => {
+const Canvas = ({ functions, ...props }) => {
+  const draw = () => {
     render(functions);
   };
 

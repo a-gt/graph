@@ -5,7 +5,26 @@ import Button from "../components/Button";
 import Canvas from "../components/Canvas";
 
 export default function Home() {
+  const [functions, setFunctions] = useState({
+    1: {
+      expression: "x",
+      color: "#99ccff",
+    },
+    2: {
+      expression: "-x",
+      color: "#ff7799",
+    },
+    3: {
+      expression: "2x",
+      color: "#77ff99",
+    },
+    4: {
+      expression: "-2x",
+      color: "#ffffaa",
+    },
+  });
   const [tab, setTab] = useState(0);
+
   return (
     <div>
       <Head>
@@ -18,8 +37,17 @@ export default function Home() {
         <div className="h-[1px] w-100 bg-silver"></div>
         <div className="flex flex-row h-[500px]">
           <div className="w-full">
-            {tab == 0 && <Canvas />}
-            {tab == 2 && <p className="pr-8"><br />This is a graphing calculator built in JavaScript using React and the canvas. This graphing calculator can graph any polynomial, logarithmic, trigonometric, or exponential function. It uses the library expr-eval for mathematical evaluation and the library tween.js for animations.</p>}
+            {tab == 0 && <Canvas functions={functions} />}
+            {tab == 2 && (
+              <p className="pr-8">
+                <br />
+                This is a graphing calculator built in JavaScript using React
+                and the canvas. This graphing calculator can graph any
+                polynomial, logarithmic, trigonometric, or exponential function.
+                It uses the library expr-eval for mathematical evaluation and
+                the library tween.js for animations.
+              </p>
+            )}
           </div>
           <div className="bg-striped h-100 w-12 flex flex-col rounded-br-xl">
             <div
