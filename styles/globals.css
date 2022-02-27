@@ -72,6 +72,13 @@ math-field:focus-within {
   --keycap-modifier-border: rgb(70, 70, 80) !important;
   --keycap-modifier-border-bottom: rgb(70, 70, 90) !important;
   --keyboard-alternate-background: hsl(var(--hue, 212), 19%, 38%) !important;
+
+  transition: all 0.05s ease-in-out !important;
+  border: none;
+}
+
+.ML__keyboard--plate {
+  border: none !important;
 }
 
 .ML__keyboard .ML__mathlive {
