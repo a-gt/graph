@@ -21,7 +21,7 @@ export default function Home() {
             {tab == 0 && <Canvas />}
             {tab == 2 && <p className="pr-8"><br />This is a graphing calculator built in JavaScript using React and the canvas. This graphing calculator can graph any polynomial, logarithmic, trigonometric, or exponential function. It uses the library expr-eval for mathematical evaluation and the library tween.js for animations.</p>}
           </div>
-          <div className="bg-striped h-100 w-12 flex flex-col">
+          <div className="bg-striped h-100 w-12 flex flex-col rounded-br-xl">
             <div
               className={
                 (tab == 0 ? "bg-dark" : "") +
