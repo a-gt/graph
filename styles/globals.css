@@ -38,3 +38,19 @@ h5,
 h6 {
   font-family: "Bebas Neue", cursive;
 }
+
+.math {
+  --highlight: rgba(153, 204, 255, 0.1) !important;
+  --contains-highlight: rgba(0, 0, 0, 0) !important;
+  --highlight-inactive: rgba(153, 204, 255, 0.1) !important;
+  outline: none;
+  display: inline-block;
+}
+
+.math:focus {
+  outline: none;
+}
+
+math-field:focus-within {
+  outline: none;
+}

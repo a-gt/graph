@@ -8,7 +8,7 @@ import Input from "../components/Input";
 export default function Home() {
   const [functions, setFunctions] = useState([
     {
-      expression: "x",
+      expression: "x^2",
       color: "#99ccff",
     },
     {

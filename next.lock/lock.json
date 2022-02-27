@@ -1,0 +1,4 @@
+{
+  "https://unpkg.com/mathlive/dist/mathlive.min.js": { "resolved": "https://unpkg.com/mathlive@0.69.10/dist/mathlive.min.js", "integrity": "sha512-jGhg6FZwGnfCI60THW1HwecuWZIAxhXTaXCLjgKjMmQp4+NDTARLNnI7goLpQ7856aACJfKNMrQXMNL43r4KJw==", "contentType": "application/javascript; charset=utf-8" },
+  "version": 1
+}

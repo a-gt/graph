@@ -14,6 +14,10 @@ export default function Document() {
         href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:ital,wght@0,200;1,400&display=swap"
         rel="stylesheet"
       />
+      <link
+        rel="stylesheet"
+        href="https://unpkg.com/mathlive/dist/mathlive-static.css"
+      />
       <body>
         <Main />
         <NextScript />
