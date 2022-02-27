@@ -26,7 +26,6 @@ const Input = ({ val, onChange, ...props }) => {
       className="w-[300px] text-black cursor-text rounded focus:ring-0 math"
       ref={ref}
     >
-      {val}
     </div>
   );
   /*

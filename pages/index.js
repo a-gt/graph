@@ -5,27 +5,16 @@ import Button from "../components/Button";
 import Canvas from "../components/Canvas";
 import Input from "../components/Input";
 
+const colors = ["#99ccff", "#ff7799", "#77ff99", "#ffffaa"];
+
 export default function Home() {
   const [functions, setFunctions] = useState([
     {
-      expression: "x^2",
+      expression: "x",
       color: "#99ccff",
-    },
-    {
-      expression: "-x",
-      color: "#ff7799",
-    },
-    {
-      expression: "2x",
-      color: "#77ff99",
-    },
-    {
-      expression: "-2x",
-      color: "#ffffaa",
     },
   ]);
   const [tab, setTab] = useState(0);
-  const [input, setInput] = useState(functions.map((f) => f.expression));
 
   return (
     <div>
@@ -43,22 +32,31 @@ export default function Home() {
               <div className="flex ">
                 <Canvas functions={functions} />
                 <div className="m-1">
-                  {functions.map((f, i) => (
-                    <div
-                      key={i}
-                      className="m-1 py-1 border-b border-dashed last:border-0"
-                    >
+                  {[...functions].map((f, i) => (
+                    <div key={i} className="m-1 py-1 border-b border-dashed">
                       {i + 1}.{" "}
                       <Input
                         val={f.expression}
                         onChange={(t) => {
-                          const a = functions;
-                          a[i].expression = t;
-                          setFunctions(a);
+                          functions[i].expression = t;
+                          setFunctions(functions);
                         }}
                       />
                     </div>
                   ))}
+                  <button
+                    className="border-dashed border m-2 p-1 hover:border-solid transition hover:bg-blue-bg"
+                    onClick={() => {
+                      const a = functions;
+                      a.push({
+                        expression: "",
+                        color: colors[a.length % colors.length],
+                      });
+                      setFunctions([...a]);
+                    }}
+                  >
+                    Add Function
+                  </button>
                 </div>
               </div>
             )}
