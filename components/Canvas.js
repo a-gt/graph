@@ -16,7 +16,7 @@ const Canvas = ({ functions, ...props }) => {
     render(functions);
   };
 
-  const canvasRef = useCanvas(draw);
+  const canvasRef = useCanvas(draw, [functions]);
 
   useEffect(() => {
     init(canvasRef.current);

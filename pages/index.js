@@ -3,27 +3,29 @@ import Image from "next/image";
 import { useState } from "react";
 import Button from "../components/Button";
 import Canvas from "../components/Canvas";
+import Input from "../components/Input";
 
 export default function Home() {
-  const [functions, setFunctions] = useState({
-    1: {
+  const [functions, setFunctions] = useState([
+    {
       expression: "x",
       color: "#99ccff",
     },
-    2: {
+    {
       expression: "-x",
       color: "#ff7799",
     },
-    3: {
+    {
       expression: "2x",
       color: "#77ff99",
     },
-    4: {
+    {
       expression: "-2x",
       color: "#ffffaa",
     },
-  });
+  ]);
   const [tab, setTab] = useState(0);
+  const [input, setInput] = useState(functions.map((f) => f.expression));
 
   return (
     <div>
@@ -37,7 +39,29 @@ export default function Home() {
         <div className="h-[1px] w-100 bg-silver"></div>
         <div className="flex flex-row h-[500px]">
           <div className="w-full">
-            {tab == 0 && <Canvas functions={functions} />}
+            {tab == 0 && (
+              <div className="flex ">
+                <Canvas functions={functions} />
+                <div className="m-1">
+                  {functions.map((f, i) => (
+                    <div
+                      key={i}
+                      className="m-1 py-1 border-b border-dashed last:border-0"
+                    >
+                      {i + 1}.{" "}
+                      <Input
+                        val={f.expression}
+                        onChange={(t) => {
+                          const a = functions;
+                          a[i].expression = t;
+                          setFunctions(a);
+                        }}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
             {tab == 2 && (
               <p className="pr-8">
                 <br />
