@@ -52,6 +52,7 @@ const Canvas = ({ functions, ...props }) => {
         });
         //canvasRef.current.dispatchEvent(mouseEvent);
         mouseDown(mouseEvent, functions);
+        traceMouse(mouseEvent, functions);
       }}
       onTouchEnd={(e) => {
         e.preventDefault();
