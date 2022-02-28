@@ -48,7 +48,7 @@ export default function Home() {
                     </div>
                   ))}
                   <button
-                    className="border-dashed border m-2 p-1 hover:border-solid transition hover:bg-blue-bg"
+                    className="border-dashed border m-2 p-1 hover:border-solid transition hover:bg-blue-bg no-tap"
                     onClick={() => {
                       const a = functions;
                       a.push({
@@ -78,7 +78,7 @@ export default function Home() {
             <div
               className={
                 (tab == 0 ? "bg-dark" : "") +
-                " w-10 h-10 mt-2 flex items-center justify-center rounded md:rounded-none md:rounded-r-md cursor-pointer transition"
+                " w-10 h-10 mt-2 flex items-center justify-center rounded md:rounded-none md:rounded-r-md cursor-pointer transition no-tap"
               }
               onClick={() => setTab(0)}
             >
@@ -102,7 +102,7 @@ export default function Home() {
             <div
               className={
                 (tab == 1 ? "bg-dark" : "") +
-                " w-10 h-10 mt-2 flex items-center justify-center rounded md:rounded-none md:rounded-r-md cursor-pointer transition md:hidden"
+                " w-10 h-10 mt-2 flex items-center justify-center rounded md:rounded-none md:rounded-r-md cursor-pointer transition md:hidden no-tap"
               }
               onClick={() => setTab(1)}
             >
@@ -127,7 +127,7 @@ export default function Home() {
             <div
               className={
                 (tab == 2 ? "bg-dark" : "") +
-                " w-10 h-10 mt-2 flex items-center justify-center rounded md:rounded-none md:rounded-r-md cursor-pointer transition"
+                " w-10 h-10 mt-2 flex items-center justify-center rounded md:rounded-none md:rounded-r-md cursor-pointer transition no-tap"
               }
               onClick={() => setTab(2)}
             >

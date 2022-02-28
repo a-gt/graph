@@ -23,7 +23,7 @@ const Input = ({ val, onChange, ...props }) => {
 
   return (
     <div
-      className="cursor-text rounded focus:ring-0 math"
+      className="cursor-text rounded focus:ring-0 math no-tap"
       ref={ref}
     >
     </div>
