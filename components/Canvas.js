@@ -31,7 +31,7 @@ const Canvas = ({ functions, ...props }) => {
         mouseDown(e, functions);
       }}
       onMouseUp={(e) => {
-        mouseUp(e);
+        mouseUp(e, functions);
       }}
       onMouseMove={(e) => {
         mouseMove(e, functions);
@@ -42,6 +42,32 @@ const Canvas = ({ functions, ...props }) => {
       }}
       onWheel={(e) => {
         onWheel(e, functions);
+      }}
+      onTouchStart={(e) => {
+        e.preventDefault();
+        let touch = e.touches[0];
+        let mouseEvent = new MouseEvent("mousedown", {
+          clientX: touch.clientX,
+          clientY: touch.clientY,
+        });
+        //canvasRef.current.dispatchEvent(mouseEvent);
+        mouseDown(mouseEvent, functions);
+      }}
+      onTouchEnd={(e) => {
+        e.preventDefault();
+        let mouseEvent = new MouseEvent("mouseup", {});
+        mouseUp(mouseEvent, functions);
+      }}
+      onTouchMove={(e) => {
+        e.preventDefault();
+        let touch = e.touches[0];
+        let mouseEvent = new MouseEvent("mousemove", {
+          clientX: touch.clientX,
+          clientY: touch.clientY,
+        });
+        //canvasRef.current.dispatchEvent(mouseEvent);
+        mouseMove(mouseEvent, functions);
+        traceMouse(mouseEvent, functions);
       }}
       {...props}
     />

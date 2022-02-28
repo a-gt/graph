@@ -46,6 +46,7 @@ h6 {
   --highlight-inactive: rgba(153, 204, 255, 0.1) !important;
   outline: none;
   display: inline-block;
+  width: 100%;
 }
 
 .math:focus {

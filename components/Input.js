@@ -24,7 +24,7 @@ const Input = ({ val, onChange, ...props }) => {
 
   return (
     <div
-      className="w-[300px] text-black cursor-text rounded focus:ring-0 math"
+      className="cursor-text rounded focus:ring-0 math"
       ref={ref}
     >
     </div>
