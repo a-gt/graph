@@ -9,11 +9,10 @@ const Input = ({ val, onChange, ...props }) => {
     const { MathfieldElement } = await import("mathlive");
     const mfe = new MathfieldElement();
     mfe.value = val;
-    /*mfe.setOptions({
+    mfe.setOptions({
       virtualKeyboardMode: "manual",
       virtualKeyboardTheme: "apple",
     });
-    */
     ref.current.innerHTML = "";
     ref.current.appendChild(mfe);
     ref.current.addEventListener("input", (e) => {
