@@ -25,13 +25,13 @@ export default function Home() {
       </Head>
       <div className="p-5 min-w-[100%]">
         <h1 className="text-4xl bold">Graphing Calculator</h1>
-        <div className="h-[1px] w-[100%] md:w-[100%] bg-silver"></div>
-        <div className="flex flex-col md:flex-row min-h-[500px]">
+        <div className="h-[1px] w-[100%] lg:w-[100%] bg-silver"></div>
+        <div className="flex flex-col lg:flex-row min-h-[500px]">
           <div className="w-full">
             {tab == 0 && (
-              <div className="flex flex-col md:flex-row">
+              <div className="flex flex-col lg:flex-row">
                 <Canvas functions={functions} />
-                <div className="m-0 md:m-1 p-0 border-t-[1px] md:border-none border-white w-[100%]">
+                <div className="m-0 lg:m-1 p-0 border-t-[1px] lg:border-none border-white w-[100%]">
                   {[...functions].map((f, i) => (
                     <div
                       key={i}
@@ -61,7 +61,7 @@ export default function Home() {
                     Add Function
                   </button>
                 </div>
-                <div className="hidden md:block w-[100%]"></div>
+                <div className="hidden lg:block w-[100%]"></div>
               </div>
             )}
             {tab == 2 && (
@@ -74,11 +74,11 @@ export default function Home() {
               </p>
             )}
           </div>
-          <div className="bg-striped pl-2 pb-2 mt-4 mb-4 md:mt-0 md:pl-0 md: pb-2 md:h-100 md:w-12 flex flex-row md:flex-col rounded-xl md:rounded-none md:rounded-br-xl hblock">
+          <div className="bg-striped pl-2 pb-2 mt-4 mb-4 lg:mt-0 lg:pl-0 lg: pb-2 lg:h-100 lg:w-12 flex flex-row lg:flex-col rounded-xl lg:rounded-none lg:rounded-br-xl hblock">
             <div
               className={
                 (tab == 0 ? "bg-dark" : "") +
-                " w-10 h-10 mt-2 flex items-center justify-center rounded md:rounded-none md:rounded-r-md cursor-pointer transition no-tap"
+                " w-10 h-10 mt-2 flex items-center justify-center rounded lg:rounded-none lg:rounded-r-lg cursor-pointer transition no-tap"
               }
               onClick={() => setTab(0)}
             >
@@ -102,7 +102,7 @@ export default function Home() {
             <div
               className={
                 (tab == 1 ? "bg-dark" : "") +
-                " w-10 h-10 mt-2 flex items-center justify-center rounded md:rounded-none md:rounded-r-md cursor-pointer transition md:hidden no-tap"
+                " w-10 h-10 mt-2 flex items-center justify-center rounded lg:rounded-none lg:rounded-r-lg cursor-pointer transition lg:hidden no-tap"
               }
               onClick={() => setTab(1)}
             >
@@ -127,7 +127,7 @@ export default function Home() {
             <div
               className={
                 (tab == 2 ? "bg-dark" : "") +
-                " w-10 h-10 mt-2 flex items-center justify-center rounded md:rounded-none md:rounded-r-md cursor-pointer transition no-tap"
+                " w-10 h-10 mt-2 flex items-center justify-center rounded lg:rounded-none lg:rounded-r-lg cursor-pointer transition no-tap"
               }
               onClick={() => setTab(2)}
             >

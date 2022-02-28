@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 
 const Input = ({ val, onChange, ...props }) => {
-  const [input, setInput] = useState(val);
   const ref = useRef();
 
   useEffect(async () => {
@@ -18,7 +17,8 @@ const Input = ({ val, onChange, ...props }) => {
     ref.current.innerHTML = "";
     ref.current.appendChild(mfe);
     ref.current.addEventListener("input", (e) => {
-      if (onChange) onChange(e.target.getValue("ascii-math"));
+      if (onChange)
+        onChange(e.target.getValue("ascii-math").replace(/⋅/g, "*"));
     });
     ref.current.math = true;
   }, []);
