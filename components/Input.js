@@ -13,6 +13,8 @@ const Input = ({ val, onChange, ...props }) => {
       virtualKeyboardMode: "manual",
       virtualKeyboardTheme: "apple",
     });
+    mfe.innerHTML +=
+      "<style>.ML__fieldcontainer{touch-action:auto !important;}</style>";
     ref.current.innerHTML = "";
     ref.current.appendChild(mfe);
     ref.current.addEventListener("input", (e) => {
@@ -25,8 +27,7 @@ const Input = ({ val, onChange, ...props }) => {
     <div
       className="cursor-text rounded focus:ring-0 math no-tap"
       ref={ref}
-    >
-    </div>
+    ></div>
   );
   /*
   return (
