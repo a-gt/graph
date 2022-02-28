@@ -48,6 +48,7 @@ export default function Home() {
                     className="border-dashed border m-2 p-1 hover:border-solid transition hover:bg-blue-bg"
                     onClick={() => {
                       const a = functions;
+                      if (a.length > 4) return alert("Max is 5 functions");
                       a.push({
                         expression: "",
                         color: colors[a.length % colors.length],

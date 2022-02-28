@@ -14,7 +14,7 @@ module.exports = {
       silver:"rgb(255, 246, 230)",
       "blue-fg": "rgb(71, 207, 237)",
       "blue-bg": "rgb(48, 52, 53)",
-      dark: "rgb(39, 35, 37)"
+      dark: "#191a21"
     }
   },
   plugins: [],
